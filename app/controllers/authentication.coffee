@@ -1,10 +1,8 @@
 AuthenticationController = Ember.Controller.extend({
-  firebaseUrl: "https://smiler.firebaseio.com",
-
   currentUser: null,
 
   init: ->
-    @set('firebaseRef', new Firebase(@get('firebaseUrl')))
+    @set('firebaseRef', new Firebase(window.ENV.FIREBASE_URL))
     @set('authRef', new FirebaseSimpleLogin(@get('firebaseRef'), (error, userResp) =>
       if error
         # Error

@@ -14,6 +14,8 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    ENV.FIREBASE_NAMESPACE = "smiler-dev-micah";
+
     // LOG_MODULE_RESOLVER is needed for pre-1.6.0
     ENV.LOG_MODULE_RESOLVER = true;
 
@@ -26,8 +28,11 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.FIREBASE_NAMESPACE = "smiler";
 
   }
+
+  ENV.FIREBASE_URL = "https://" + ENV.FIREBASE_NAMESPACE + ".firebaseio.com";
 
   return ENV;
 };
