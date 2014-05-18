@@ -10,14 +10,16 @@
     {{BASE_TAG}}
 
     <link rel="stylesheet" href="assets/smiler.css">
-    <script type="text/javascript" src="https://cdn.firebase.com/js/client/1.0.15/firebase.js"></script>
-    <script type='text/javascript' src='https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'></script>
   </head>
   <body>
     <script>
       window.ENV = {{ENV}};
     </script>
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+    <script src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
     <script src="assets/smiler.js"></script>
+    <script src='/emberfire.js'></script>
+    <!--<script src="https://raw.githubusercontent.com/firebase/emberFire/master/dist/emberfire.min.js"></script>-->
     <script>
       window.Smiler = require('smiler/app')['default'].create(ENV.APP);
     </script>

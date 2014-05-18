@@ -1,21 +1,44 @@
 AuthenticationController = Ember.Controller.extend({
-  isLoggedIn: false,
-
   firebaseUrl: "https://smiler.firebaseio.com",
+
+  currentUser: null,
 
   init: ->
     @set('firebaseRef', new Firebase(@get('firebaseUrl')))
-    @set('authRef', new FirebaseSimpleLogin(@get('firebaseRef'), (error, user) =>
+    @set('authRef', new FirebaseSimpleLogin(@get('firebaseRef'), (error, userResp) =>
       if error
         # Error
         console.log(error)
-      else if user
+      else if userResp
         # Login
-        @set('isLoggedIn', true)
+        @store.find('user', userResp.uid)
+        .then( (u) =>
+          user = u
+          @set('currentUser', user)
+        ).catch( (reason) =>
+          # User not found
+          user = @store.createRecord('user', {
+            id: userResp.uid,
+            username: userResp.username,
+            email: userResp.email,
+            displayName: userResp.displayName,
+            avatarUrl: userResp.avatar_url
+          })
+          user.save()
+          .then( =>
+            @set('currentUser', user)
+          )
+        )
+
       else
         # Logout
-        @set('isLoggedIn', false)
+        @set('currentUser', null)
     ))
+
+  isLoggedIn:( ->
+    @get('currentUser') != null
+  ).property('currentUser')
+
 
   login: ->
     @get('authRef').login('github')

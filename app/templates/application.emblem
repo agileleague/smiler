@@ -9,6 +9,8 @@ ul.experiments
 = outlet
 
 if controllers.authentication.isLoggedIn
-  a.logout href="#" click="logout" Logout
+  a.logout href="#" click="logout"
+    | Logout 
+    = controllers.authentication.currentUser.username
 else
   a.github-login href="#" click="login" Login with Github
