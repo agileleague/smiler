@@ -1,4 +1,14 @@
 h2.title
   | Hello Emblem
 
+ul.experiments
+  each experiment in experiments
+    li= experiment.name
+
+
 = outlet
+
+if controllers.authentication.isLoggedIn
+  a.logout href="#" click="logout" Logout
+else
+  a.github-login href="#" click="login" Login with Github
