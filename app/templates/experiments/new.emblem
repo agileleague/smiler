@@ -1,0 +1,9 @@
+h2 New Exp
+
+.new-experiment-form
+  .name
+    label Name
+    = input value=name
+
+  .save
+    button click="save" Save
