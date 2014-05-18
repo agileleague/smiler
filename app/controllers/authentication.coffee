@@ -18,9 +18,9 @@ AuthenticationController = Ember.Controller.extend({
           user = @store.createRecord('user', {
             id: userResp.uid,
             username: userResp.username,
-            email: userResp.email,
+            email: userResp.thirdPartyUserData.email,
             displayName: userResp.displayName,
-            avatarUrl: userResp.avatar_url
+            avatarUrl: userResp.thirdPartyUserData.avatar_url
           })
           user.save()
           .then( =>
