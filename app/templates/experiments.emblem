@@ -2,7 +2,9 @@ h4 Experiments
 
 ul
   each
-    li= name
+    li
+      link-to 'experiment' id
+        span= name
 
 = outlet
 
