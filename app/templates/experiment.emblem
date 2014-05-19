@@ -1,1 +1,9 @@
 h3= name
+
+h4 Participants
+ul.participants
+  each participants
+    li= username
+
+unless isParticipant
+  a.join-link href="#" click=joinExperiment Join Experiment
