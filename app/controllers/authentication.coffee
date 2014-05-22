@@ -34,7 +34,7 @@ AuthenticationController = Ember.Controller.extend({
     ))
 
   isLoggedIn:( ->
-    @get('currentUser') != null
+    if @get('currentUser.id') then true else false
   ).property('currentUser')
 
 

@@ -1,9 +1,9 @@
-ExperimentController = Ember.Controller.extend({
+ExperimentController = Ember.ObjectController.extend({
   needs: "authentication",
 
   currentUser: Ember.computed.alias("controllers.authentication.currentUser"),
 
-  participants: Ember.computed.alias("model.participants"),
+  isModerator: Ember.computed.alias("currentUser.isModerator")
 
   isParticipant:( ->
     if currentUser = @get('currentUser')
@@ -11,7 +11,7 @@ ExperimentController = Ember.Controller.extend({
       if u then true else false
     else
       false
-  ).property('participants', 'currentUser')
+  ).property('participants.[]', 'currentUser')
 
   actions: {
     joinExperiment: ->
