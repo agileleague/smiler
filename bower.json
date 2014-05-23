@@ -14,6 +14,10 @@
     "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.1",
     "emberfire": "~1.0.9",
     "firebase-simple-login": "~1.4.1",
-    "firebase": "~1.0.15"
+    "firebase": "~1.0.15",
+    "d3": "~3.4.8"
+  },
+  "devDependencies": {
+    "d3": "~3.4.8"
   }
 }
