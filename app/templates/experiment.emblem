@@ -1,10 +1,24 @@
 h3= name
 
+
+h4 Total Score
+h3= totalScore
+
+h4 Votes
+ul.votes
+  each votes
+    li
+      span= user.username
+      | -
+      span= score
+
 if isModerator
   h4 Participants
   ul.participants
     each participants
       li= username
 
-unless isParticipant
+if isParticipant
+  view "upvote"
+else
   a.join-link href="#" click=joinExperiment Join Experiment
