@@ -1,27 +1,29 @@
-h3= name
+.experiment data-experiment-id=id
+  h3= name
+  h4 Total Score
+  h3= totalScore
 
+  #up-down-bars.chart
+    %svg
 
-h4 Total Score
-h3= totalScore
+  if isModerator
+    h4 Participants
+    ul.participants
+      each participants
+        li= username
 
-if isModerator
-  h4 Participants
-  ul.participants
-    each participants
-      li= username
+  if isParticipant
+    view "upvote"
+    |
+    view "downvote"
+  else
+    a.join-link href="#" click=joinExperiment Join Experiment
 
-if isParticipant
-  view "upvote"
-  |
-  view "downvote"
-else
-  a.join-link href="#" click=joinExperiment Join Experiment
-
-h4 Votes
-ul.votes
-  each votes
-    li
-      span= user.username
-      | : 
-      span= score
+  h4 Votes
+  ul.votes
+    each votes
+      li
+        span= user.username
+        | : 
+        span= score
 
