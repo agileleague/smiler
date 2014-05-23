@@ -28,15 +28,23 @@ ExperimentController = Ember.ObjectController.extend({
       @get('model').save()
 
     upVote: ->
+      @send('vote', 1)
+
+    downVote: ->
+      @send('vote', -1)
+
+    vote: (score) ->
       v = @store.createRecord('vote', {
         user: @get('currentUser'),
         experiment: @get('model'),
-        score: 1
+        score: score
       })
       v.save()
 
       @get('votes').pushObject(v)
       @get('model').save()
+
+
   }
 
 })

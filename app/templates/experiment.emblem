@@ -9,7 +9,7 @@ ul.votes
   each votes
     li
       span= user.username
-      | -
+      | : 
       span= score
 
 if isModerator
@@ -20,5 +20,7 @@ if isModerator
 
 if isParticipant
   view "upvote"
+  |
+  view "downvote"
 else
   a.join-link href="#" click=joinExperiment Join Experiment
