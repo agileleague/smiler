@@ -19,6 +19,7 @@ app.import('vendor/firebase/firebase.js');
 app.import('vendor/firebase-simple-login/firebase-simple-login.js')
 app.import('vendor/emberfire/dist/emberfire.js')
 app.import('vendor/d3/d3.js')
+app.import('vendor/underscore/underscore.js')
 
 
 // If the library that you are including contains AMD or ES6 modules that
