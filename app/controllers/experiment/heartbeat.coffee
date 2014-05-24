@@ -6,7 +6,6 @@ HeartbeatController = Ember.ObjectController.extend({
   actions: {
     buildChart: ->
       @refreshChart()
-
   }
 
   voteChanged:( ->
@@ -20,7 +19,7 @@ HeartbeatController = Ember.ObjectController.extend({
     @set('refreshHandle', null)
 
     timeNow = (new Date().getTime() / 1000)
-    timeMin = timeNow - (30)
+    timeMin = timeNow - (180)
 
     timeScale = d3.scale.linear()
       .domain([timeMin, timeNow])
