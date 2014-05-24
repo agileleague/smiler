@@ -22,63 +22,6 @@ ExperimentController = Ember.ObjectController.extend({
     )
   ).property('votes.[]')
 
-  votesChanged:( ->
-    voteTimes = @get('votes').toArray().map( (v) ->
-      v.get('createdAt')
-    )
-
-    height = 200
-
-    refreshChart = =>
-      timeNow = (new Date().getTime() / 1000)
-      timeMin = timeNow - (30)
-
-      timeScale = d3.scale.linear()
-        .domain([timeMin, timeNow])
-        .range([0, 600])
-
-      voteGs = d3.select('.simple-time-dots svg').selectAll('g').data(@get('votes').toArray(), (d) ->
-        d.get('id')
-      )
-
-      g = voteGs.enter()
-        .append('g')
-
-      g.attr('class', 'vote-dot')
-        .attr('data-vote-id', (d) ->
-          d.get('id')
-        )
-
-      c = g.append('circle')
-        .classed('upvote', (d) ->
-          d.get('score') > 0
-        )
-        .classed('downvote', (d) ->
-          d.get('score') < 0
-        )
-        .attr('cx', (d) ->
-          timeScale(d.get('createdAt'))
-        )
-        .attr('cy', 40)
-        .attr('r', 7)
-
-      voteGs.transition().selectAll('circle')
-        .attr('cx', (d) ->
-          timeScale(d.get('createdAt'))
-          )
-
-      voteGs.exit()
-        .remove()
-
-      Ember.run.later( ->
-        refreshChart()
-      , 100)
-
-    refreshChart()
-
-
-  ).observes('votes.[]')
-
   actions: {
     joinExperiment: ->
       @get('participants').pushObject(@get('currentUser'))

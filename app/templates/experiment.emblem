@@ -3,8 +3,13 @@
   h4 Total Score
   h3= totalScore
 
-  .simple-time-dots.chart
-    %svg
+  nav.chart-selection
+    ul
+      li= link-to "experiment.vote-list" model | Vote List
+      li= link-to "experiment.heartbeat" model | Heartbeat
+
+  .chart-display
+    = outlet
 
   if isModerator
     h4 Participants
@@ -18,12 +23,3 @@
     view "downvote"
   else
     a.join-link href="#" click=joinExperiment Join Experiment
-
-  h4 Votes
-  ul.votes
-    each votes
-      li
-        span= user.username
-        | : 
-        span= score
-

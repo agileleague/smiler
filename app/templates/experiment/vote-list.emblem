@@ -1,0 +1,8 @@
+.vote-list
+  h4 Votes
+  ul.votes
+    each votes
+      li
+        span= user.username
+        | : 
+        span= score
