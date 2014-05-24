@@ -28,8 +28,6 @@ ExperimentController = Ember.ObjectController.extend({
     )
 
     height = 200
-    scoreMax = 10
-    scoreMin = -10
 
     refreshChart = =>
       timeNow = (new Date().getTime() / 1000)
@@ -39,15 +37,7 @@ ExperimentController = Ember.ObjectController.extend({
         .domain([timeMin, timeNow])
         .range([0, 600])
 
-      scoreScale = d3.scale.linear()
-        .domain([scoreMin, scoreMax])
-        .range([height, 0])
-
-      score = @get('totalScore')
-      score = Math.min(score, scoreMax)
-      score = Math.max(score, scoreMin)
-
-      voteGs = d3.select('#up-down-bars svg').selectAll('g').data(@get('votes').toArray(), (d) ->
+      voteGs = d3.select('.simple-time-dots svg').selectAll('g').data(@get('votes').toArray(), (d) ->
         d.get('id')
       )
 
@@ -60,13 +50,16 @@ ExperimentController = Ember.ObjectController.extend({
         )
 
       c = g.append('circle')
-        .attr('class', (d) ->
-          if d.get('score') > 0 then 'upvote' else 'downvote'
+        .classed('upvote', (d) ->
+          d.get('score') > 0
+        )
+        .classed('downvote', (d) ->
+          d.get('score') < 0
         )
         .attr('cx', (d) ->
           timeScale(d.get('createdAt'))
         )
-        .attr('cy', scoreScale(score))
+        .attr('cy', 40)
         .attr('r', 7)
 
       voteGs.transition().selectAll('circle')
@@ -78,7 +71,6 @@ ExperimentController = Ember.ObjectController.extend({
         .remove()
 
       Ember.run.later( ->
-        console.log("refreshing")
         refreshChart()
       , 100)
 

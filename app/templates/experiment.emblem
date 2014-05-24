@@ -3,7 +3,7 @@
   h4 Total Score
   h3= totalScore
 
-  #up-down-bars.chart
+  .simple-time-dots.chart
     %svg
 
   if isModerator

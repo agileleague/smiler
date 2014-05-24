@@ -1,6 +1,16 @@
 .experiment {
-  #up-down-bars {
+  .simple-time-dots {
     height: 200px;
+  }
+
+  circle.upvote {
+    stroke: green;
+    fill: green;
+  }
+
+  circle.downvote {
+    stroke: red;
+    fill: red;
   }
 }
 
