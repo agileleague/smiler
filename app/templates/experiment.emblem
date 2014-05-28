@@ -7,6 +7,7 @@
     ul
       li= link-to "experiment.vote-list" model | Vote List
       li= link-to "experiment.heartbeat" model | Heartbeat
+      li= link-to "experiment.user-column" model | User Column
 
   .chart-display
     = outlet

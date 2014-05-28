@@ -9,6 +9,7 @@ Router.map ->
   @resource('experiment', { path: '/experiment/:experiment_id' }, ->
     @route('vote-list')
     @route('heartbeat')
+    @route('user-column')
   )
 
 `export default Router;`
