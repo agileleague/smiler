@@ -33,9 +33,9 @@ UserColumnController = Ember.ObjectController.extend({
         scores.push({ user: u, score: score })
       )
 
-      @set('scoresByParticipant', scores)
       console.log("Scores:")
       console.log(scores)
+      @set('scoresByParticipant', scores)
     )
   ).observes('votes.[], participants.[]')
 
@@ -60,10 +60,17 @@ UserColumnController = Ember.ObjectController.extend({
       .domain([-10, 10])
       .range([height,0])
 
-
     userGroups = d3.select('.user-column svg').selectAll('g').data(scores, (d) ->
       d.user.get('id')
     )
+
+    userGroups.transition().select('rect')
+      .attr('y', (d) ->
+        scoreScale(d.score)
+      )
+      .attr('height', (d) ->
+        height - scoreScale(d.score)
+      )
 
     g = userGroups.enter()
       .append('g')
@@ -75,9 +82,6 @@ UserColumnController = Ember.ObjectController.extend({
       .attr('transform', (d) ->
         "translate(#{userScale(d.user.get('id'))},0)"
       )
-      .attr('data-score', (d) ->
-        d.score
-      )
 
     g.append('rect')
       .attr('y', (d) ->
@@ -88,16 +92,13 @@ UserColumnController = Ember.ObjectController.extend({
       )
       .attr('width', 10)
 
-
-    g = userGroups.transition().selectAll('rect')
-
-    g.attr('y', (d) ->
-        scoreScale(d.score)
+    g.append('image')
+      .attr('x', -20)
+      .attr('xlink:href', (d) ->
+        d.user.get('avatarUrl')
       )
-      .attr('height', (d) ->
-        height - scoreScale(d.score)
-      )
-
+      .attr('width', 50)
+      .attr('height', 50)
 
 
 
