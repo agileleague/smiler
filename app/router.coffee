@@ -10,6 +10,7 @@ Router.map ->
     @route('vote-list')
     @route('heartbeat')
     @route('user-column')
+    @route('line-overall-score')
   )
 
 `export default Router;`

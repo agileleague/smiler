@@ -8,6 +8,7 @@
       li= link-to "experiment.vote-list" model | Vote List
       li= link-to "experiment.heartbeat" model | Heartbeat
       li= link-to "experiment.user-column" model | User Column
+      li= link-to "experiment.line-overall-score" model | Overall Score (Line)
 
   .chart-display
     = outlet
