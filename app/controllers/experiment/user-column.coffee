@@ -50,27 +50,55 @@ UserColumnController = Ember.ObjectController.extend({
       s.user.get('id')
     )
 
-    height = 200
+    height = 100
+    picHeight = 50
 
     userScale = d3.scale.ordinal()
       .domain([participantIds])
       .rangeRoundBands([0, 600], 0.5)
 
     scoreScale = d3.scale.linear()
-      .domain([-10, 10])
-      .range([height,0])
+      .domain([-10, 0, 10])
+      .range([0, height, 0])
 
     userGroups = d3.select('.user-column svg').selectAll('g').data(scores, (d) ->
       d.user.get('id')
     )
 
-    userGroups.transition().select('rect')
-      .attr('y', (d) ->
+    classRect = (rect) ->
+      rect.attr('class', (d) ->
+        "score-#{d.score}"
+      )
+      .classed('negative-score', (d) ->
+        d.score < 0
+      )
+      .classed('positive-score', (d) ->
+        d.score > 0
+      )
+      .classed('zero-score', (d) ->
+        d.score == 0
+      )
+
+    valRect = (rect) ->
+      rect.attr('y', (d) ->
         scoreScale(d.score)
       )
       .attr('height', (d) ->
         height - scoreScale(d.score)
       )
+      .attr('transform', (d) ->
+        if d.score > 0
+          "translate(0,0)"
+        else
+          # Draw it upwards, then shift it down below the picture
+          "translate(0,#{picHeight + (height - scoreScale(d.score))})"
+      )
+
+    r = userGroups.select('rect')
+    classRect(r)
+
+    r = userGroups.transition().select('rect')
+    valRect(r)
 
     g = userGroups.enter()
       .append('g')
@@ -83,22 +111,19 @@ UserColumnController = Ember.ObjectController.extend({
         "translate(#{userScale(d.user.get('id'))},0)"
       )
 
-    g.append('rect')
-      .attr('y', (d) ->
-        scoreScale(d.score)
-      )
-      .attr('height', (d) ->
-        height - scoreScale(d.score)
-      )
+    r = g.append('rect')
+    classRect(r)
+    valRect(r)
       .attr('width', 10)
 
     g.append('image')
       .attr('x', -20)
+      .attr('y', height)
       .attr('xlink:href', (d) ->
         d.user.get('avatarUrl')
       )
-      .attr('width', 50)
-      .attr('height', 50)
+      .attr('width', picHeight)
+      .attr('height', picHeight)
 
 
 

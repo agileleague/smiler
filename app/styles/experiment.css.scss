@@ -5,6 +5,16 @@
 
   .user-column {
     height: 200px;
+
+    rect.positive-score {
+      stroke: green;
+      fill: green;
+    }
+
+    rect.negative-score {
+      stroke: red;
+      fill: red;
+    }
   }
 
   circle.upvote {
