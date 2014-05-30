@@ -1,25 +1,32 @@
 LineOverallScoreController = Ember.ObjectController.extend({
   needs: "experiment",
 
+  historyLengthInS: 600,
+
+  refreshHandle: null,
+
   actions: {
     buildChart: ->
       @refreshChart()
+
+    setHistoryLength: (length) ->
+      if @get('refreshHandle')
+        Ember.run.cancel(@get('refreshHandle'))
+
+      @set('historyLengthInS', length)
+
   }
 
   refreshChart:( ->
-
-    # Now and 3 minutes ago
-    timeNow = new Date()
-    timeMin = timeNow.getTime() - (180 * 1000)
-
+    @set('refreshHandle', null)
 
     allVotes = @get('votes').toArray()
 
     totalScore = 0
     totalScoreByTime = d3.nest()
       .key( (d) ->
-        # Floor the createdAt to the nearest 10-second mark, to group them in 10-second increments
-        epochMillis = Math.floor(d.get('createdAt') / 1.0) * 1 * 1000
+        # Group by their second of creation
+        epochMillis = d.get('createdAt') * 1000
       )
       .sortKeys(d3.ascending)
       .rollup( (leaves) ->
@@ -38,10 +45,12 @@ LineOverallScoreController = Ember.ObjectController.extend({
       s.values
     )
 
-    scoreCount = totalScoreByTime.length
-    #timeMin = new Date(parseInt(totalScoreByTime[0].key))
-    timeMin = new Date(new Date().getTime() - (180 * 1000))
-    timeMax = new Date(parseInt(totalScoreByTime[scoreCount - 1].key))
+    timeMax = new Date()
+    timeMin = if @get('historyLengthInS') > 0
+      new Date(timeMax.getTime() - @get('historyLengthInS') * 1000)
+    else
+      # Lifetime, so get the time of the first vote
+      new Date(parseInt(totalScoreByTime[0].key))
 
     timeScale = d3.time.scale()
       .domain([timeMin, timeMax])
@@ -72,7 +81,13 @@ LineOverallScoreController = Ember.ObjectController.extend({
     lineGroup.select('g.line-container path')
       .attr('d', lineGenerator)
 
-  ).observes('votes.[]')
+    hook = Ember.run.later( =>
+      @refreshChart()
+    , 100)
+
+    @set('refreshHandle', hook)
+
+  ).observes('votes.[]', 'historyLengthInS')
 
 })
 

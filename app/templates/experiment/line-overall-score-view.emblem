@@ -1,2 +1,10 @@
 .line-overall-score.chart
   %svg
+
+.time-controls
+  %a href="#" click="setHistoryLength 0"
+    | Lifetime
+  %a href="#" click="setHistoryLength 600"
+    | 5 Minutes
+  %a href="#" click="setHistoryLength 60"
+    | 1 Minute
