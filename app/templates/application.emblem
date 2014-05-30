@@ -1,7 +1,8 @@
 h1.title Smiler
 
-nav
-  link-to "experiments" | Experiments
+if controllers.authentication.isLoggedIn
+  nav
+    link-to "experiments" | Experiments
 
 = outlet
 

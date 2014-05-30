@@ -9,4 +9,5 @@ ul
 = outlet
 
 .controls
-  link-to 'experiments.new' | New Experiment
+  if controllers.authentication.isModerator
+    link-to 'experiments.new' | New Experiment
