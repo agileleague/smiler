@@ -20,7 +20,8 @@ AuthenticationController = Ember.Controller.extend({
             username: userResp.username,
             email: userResp.thirdPartyUserData.email,
             displayName: userResp.displayName,
-            avatarUrl: userResp.thirdPartyUserData.avatar_url
+            avatarUrl: userResp.thirdPartyUserData.avatar_url,
+            isModerator: false
           })
           user.save()
           .then( =>
