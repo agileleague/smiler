@@ -54,7 +54,7 @@ UserColumnController = Ember.ObjectController.extend({
     picHeight = 50
 
     userScale = d3.scale.ordinal()
-      .domain([participantIds])
+      .domain(participantIds)
       .rangeRoundBands([0, 600], 0.5)
 
     scoreScale = d3.scale.linear()
