@@ -15,15 +15,10 @@ AuthenticationController = Ember.Controller.extend({
           @set('currentUser', user)
         ).catch( (reason) =>
           # User not found
-          user = @store.createRecord('user', {
-            id: userResp.uid,
-            username: userResp.username,
-            email: userResp.thirdPartyUserData.email,
-            displayName: userResp.displayName,
-            avatarUrl: userResp.thirdPartyUserData.avatar_url,
-            isModerator: false
-          })
+          userData = @initUser(userResp)
+          user = @store.createRecord('user', userData)
           user.save()
+
           .then( =>
             @set('currentUser', user)
           )
@@ -43,11 +38,31 @@ AuthenticationController = Ember.Controller.extend({
   ).property('currentUser')
 
 
-  login: ->
-    @get('authRef').login('github')
+  login: (provider) ->
+    @get('authRef').login(provider)
 
   logout: ->
     @get('authRef').logout()
+
+
+  initUser: (userResponse) ->
+    userData = {
+      id: userResponse.uid,
+      displayName: userResponse.displayName,
+      isModerator: false,
+      provider: userResponse.provider
+    }
+    if userResponse.provider == 'github'
+      userData.username = userResponse.username
+      userData.avatarUrl = userResponse.thirdPartyUserData.avatar_url
+    else if userResponse.provider == 'facebook'
+      userData.username = userResponse.thirdPartyUserData.name
+      userData.avatarUrl = "http://graph.facebook.com/#{userResponse.thirdPartyUserData.id}/picture?type=large"
+    else if userResponse.provider == 'google'
+      userData.username = userResponse.displayName
+      userData.avatarUrl = userResponse.thirdPartyUserData.picture
+
+    userData
 
 })
 

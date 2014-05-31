@@ -12,4 +12,10 @@ footer
       | Logout 
       = controllers.authentication.currentUser.username
   else
-    a.github-login href="#" click="login" Login with Github
+    ul.login-options
+      li.github
+        a.github-login href="#" click="login 'github'" Login with Github
+      li.facebook
+        a.facebook-login href="#" click="login 'facebook'" Login with Facebook
+      li.google
+        a.twitter-login href="#" click="login 'google'" Login with Google

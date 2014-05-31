@@ -2,8 +2,8 @@ ApplicationController = Ember.Controller.extend({
   needs: "authentication",
 
   actions: {
-    login: ->
-      @get('controllers.authentication').login()
+    login: (provider) ->
+      @get('controllers.authentication').login(provider)
 
     logout: ->
       @get('controllers.authentication').logout()
