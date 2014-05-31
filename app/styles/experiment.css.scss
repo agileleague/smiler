@@ -35,5 +35,20 @@
       fill: white;
     }
   }
+
+  .user-smilies {
+    height: 200px;
+
+    .face-outer-circle {
+      stroke: black;
+      fill: transparent;
+    }
+
+    .mouth {
+      stroke-width: 10;
+      stroke: black;
+      fill: transparent;
+    }
+  }
 }
 

@@ -11,6 +11,7 @@ Router.map ->
     @route('heartbeat')
     @route('user-column')
     @route('line-overall-score')
+    @route('user-smilies')
   )
 
 `export default Router;`
