@@ -12,7 +12,8 @@ HeartbeatController = Ember.ObjectController.extend({
     if @get('refreshHandle')
       Ember.run.cancel(@get('refreshHandle'))
 
-    @refreshChart()
+    # For some reason, EmberFire sets the votes array to empty, then refills it
+    @refreshChart() unless @get('votes.length') == 0
   ).observes('votes.[]')
 
   refreshChart: ->

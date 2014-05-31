@@ -32,9 +32,6 @@ UserColumnController = Ember.ObjectController.extend({
 
         scores.push({ user: u, score: score })
       )
-
-      console.log("Scores:")
-      console.log(scores)
       @set('scoresByParticipant', scores)
     )
   ).observes('votes.[], participants.[]')
