@@ -2,12 +2,12 @@
   .heartbeat {
     height: 200px;
 
-    circle.upvote {
+    .upvote {
       stroke: green;
       fill: green;
     }
 
-    circle.downvote {
+    .downvote {
       stroke: red;
       fill: red;
     }
@@ -41,6 +41,8 @@
 
     .face-outer-circle {
       stroke: black;
+      opacity: 0.2;
+      fill-opacity: 0.3;
     }
 
     .mouth {

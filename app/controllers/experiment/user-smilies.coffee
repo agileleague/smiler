@@ -65,18 +65,22 @@ UserSmiliesController = Ember.ObjectController.extend({
     mouthControlScale = d3.scale.linear()
       .domain([-10, 10])
       .range([-faceRadius + mouthYOffset, faceRadius + mouthYOffset])
+      .clamp(true)
 
     mouthPointScale = d3.scale.linear()
       .domain([-10, 10])
       .range([mouthYOffset * 2, 0])
+      .clamp(true)
 
     eyeYScale = d3.scale.linear()
       .domain([-10,0,10])
       .range([eyeRadius, (eyeRadius * 0.2), eyeRadius])
+      .clamp(true)
 
     faceColorScale = d3.scale.linear()
       .domain([-10, 0, 10])
       .range([angryColor, zeroColor, happyColor])
+      .clamp(true)
 
     mouthPath = (datum) ->
       start = [mouthXOffset - faceRadius, mouthPointScale(datum.score)]
@@ -86,9 +90,7 @@ UserSmiliesController = Ember.ObjectController.extend({
       "M#{start[0]},#{start[1]} Q#{control[0]},#{control[1]} #{finish[0]},#{finish[1]}"
 
     leftEye = (ellipse) ->
-      ellipse.classed('eye', true)
-        .classed('left-eye', true)
-        .attr('cx', -eyeXOffset)
+        ellipse.attr('cx', -eyeXOffset)
         .attr('cy', -eyeYOffset)
         .attr('rx', eyeRadius)
         .attr('ry', (d) ->
@@ -96,9 +98,7 @@ UserSmiliesController = Ember.ObjectController.extend({
         )
 
     rightEye = (ellipse) ->
-      ellipse.classed('eye', true)
-        .classed('right-eye', true)
-        .attr('cx', eyeXOffset)
+        ellipse.attr('cx', eyeXOffset)
         .attr('cy', -eyeYOffset)
         .attr('rx', eyeRadius)
         .attr('ry', (d) ->
@@ -111,7 +111,7 @@ UserSmiliesController = Ember.ObjectController.extend({
 
 
     # Update
-    g = userGroups
+    g = userGroups.transition()
       .attr('data-score', (d) ->
         d.score
       )
@@ -152,7 +152,6 @@ UserSmiliesController = Ember.ObjectController.extend({
       .attr('fill', (d) ->
         faceColorScale(d.score)
       )
-      .attr('fill-opacity', 0.3)
 
 
     mouth = g.append('path')
@@ -162,9 +161,13 @@ UserSmiliesController = Ember.ObjectController.extend({
       )
 
     le = g.append('ellipse')
+      .classed('eye', true)
+      .classed('left-eye', true)
     leftEye(le)
 
     re = g.append('ellipse')
+      .classed('eye', true)
+      .classed('right-eye', true)
     rightEye(re)
 
 })
