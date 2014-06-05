@@ -1,0 +1,59 @@
+$fontcolor: #3c3c3c;
+$beige:#a19270;
+$lightbeige:#e3dfd9;
+$darkblue:#303133;
+$red:#7b4414;
+
+
+$column-padding: .75%;
+$search-padding: 1.5%;
+
+$body-font: 'Lora', serif;
+$header-font: 'Raleway', sans-serif;
+
+$small-body: 800px;
+
+
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+
+@mixin rotate($deg) {
+  transform:rotate($deg);
+  -ms-transform:rotate($deg); 
+  -webkit-transform:rotate($deg);
+}
+
+
+@mixin calc($property, $expression) { 
+  #{$property}: -webkit-calc(#{$expression}); 
+  #{$property}: calc(#{$expression}); 
+} 
+
+@mixin wiggle-fix {
+ // -webkit-filter: blur(0px);
+  -webkit-backface-visibility: hidden;
+}
+
+
+@mixin box-shadow( $horiz, $vert, $blur, $spread, $color){
+  -webkit-box-shadow: $horiz $vert $blur $spread $color;
+  -moz-box-shadow: $horiz $vert $blur $spread $color;
+  box-shadow: $horiz $vert $blur $spread $color;
+}
+
+@mixin columns( $col ){
+  -webkit-column-count:$col;
+  -moz-column-count:$col;
+  column-count:$col;
+}
+
+
+// Media Break Adjustments
+
+$small-min: "only screen and (max-width: #{700px})"; //700px
+
