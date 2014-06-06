@@ -1,5 +1,11 @@
+`import svgIcons from "smiler/utils/svg-icons";`
+
 VoteListController = Ember.ObjectController.extend({
   needs: "experiment",
+
+  thumbUpPath: svgIcons.thumbUpPath
+
+  thumbDownPath: svgIcons.thumbDownPath
 
   voteChanged:( ->
     @get('votes').then( (vs) =>
@@ -36,9 +42,14 @@ VoteListController = Ember.ObjectController.extend({
     voteRow.append('td').classed('username', true).html((d) ->
       "<img src='#{d.get('user.avatarUrl')}' />"
     )
-    voteRow.append('td').classed('score', true).text((d) ->
-      d.get('score')
-    )
+    voteRow.append('td').classed('score', true).append('svg').append('path')
+      .attr('transform', "scale(0.05)")
+      .attr('d', (d) =>
+        if d.get('score') > 0
+          @get('thumbUpPath')
+        else
+          @get('thumbDownPath')
+      )
     voteRow.append('td').classed('timestamp', true).html((d) ->
       t = moment.unix(d.get('createdAt'))
       "<time datetime='#{t.toISOString()}'>#{t.fromNow()}</time>"
