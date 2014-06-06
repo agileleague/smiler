@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "d3": "~3.4.8",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "momentjs": "~2.6.0"
   }
 }
