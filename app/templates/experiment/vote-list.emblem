@@ -1,8 +1,9 @@
 .vote-list
   h4 Votes
-  ul.votes
-    each votes
-      li
-        span= user.username
-        | : 
-        span= score
+  table.vote-list
+    thead
+      tr
+        td Person
+        td Vote
+        td Time
+    tbody
