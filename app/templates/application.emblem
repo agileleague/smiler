@@ -1,6 +1,8 @@
-.full
-  h1.title Smiler
-  
+.sidebar
+  .logo
+    img.logo-img src="/smiler-logo-white.svg"
+
+.content
   if controllers.authentication.isLoggedIn
     nav
       link-to "experiments" | Experiments

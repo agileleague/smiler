@@ -5,5 +5,31 @@
 
 
 html, body {
-  margin: 20px;
+  margin:0;
+}
+
+.sidebar {
+  position:fixed;
+  z-index:10;
+  height:100%;
+  width:265px;
+  top:0;
+  left:0;
+  overflow:auto;
+  background:$gray;
+  .logo {
+    width:100%;
+    height:200px;
+    padding:60px 30px;
+    background:url('/space.jpg') no-repeat;
+    background-position:center center;
+    background-size:cover;
+    border-bottom:solid 1px lighten($darkblue, 4%);
+  }
+}
+
+.content {
+  padding:40px 40px 60px 305px;
+  position:relative;
+  
 }

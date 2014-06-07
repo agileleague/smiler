@@ -1,8 +1,10 @@
-$fontcolor: #3c3c3c;
+$gray:#303133;
+
+$fontcolor: #4c4c4c;
 $beige:#a19270;
 $lightbeige:#e3dfd9;
-$darkblue:#303133;
-$red:#7b4414;
+$blue:#2266a7;
+$darkblue:#49484d;
 
 
 $column-padding: .75%;
@@ -10,8 +12,6 @@ $search-padding: 1.5%;
 
 $body-font: 'Lora', serif;
 $header-font: 'Raleway', sans-serif;
-
-$small-body: 800px;
 
 
 @mixin transition($transition-property, $transition-time, $method) {
