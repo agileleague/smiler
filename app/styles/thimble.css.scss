@@ -101,10 +101,12 @@ video {
 /* Headers */
 
 h1, h2, h3, h4, h5 {
-  //font-weight:300;
+  font-weight:normal;
   font-family: $header-font;
-  letter-spacing:1px;
-  text-transform:uppercase;
+  //letter-spacing:1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height:1.25;
   }
 
 h1.super-header {font-size:5em;}
@@ -129,7 +131,6 @@ a {
 	-webkit-transition:.2s linear;
 	-moz-transition:.2s linear;
 	}
-.pdf {padding-left:23px; background:url('images/pdf.gif') no-repeat center left;min-height:20px;}
 
 
 /* Buttons */

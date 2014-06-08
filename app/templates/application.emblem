@@ -2,6 +2,10 @@
   .logo
     img.logo-img src="/smiler-logo-white.svg"
 
+  .total-score
+    span.total Total Score:  
+    span.score 14
+
   .vote
     .up.vote-btn
       | &#9650;

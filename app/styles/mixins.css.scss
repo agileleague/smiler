@@ -1,10 +1,11 @@
 $gray:#303133;
+$lightgray:#c5c5c5;
 
 $fontcolor: #4c4c4c;
 $beige:#a19270;
 $lightbeige:#e3dfd9;
 $blue:#2266a7;
-$darkblue:#49484d;
+$dark-blue:#49484d;
 
 $dark-red:#7b4414;
 $red:#f15a3b;
@@ -12,8 +13,8 @@ $red:#f15a3b;
 $column-padding: .75%;
 $search-padding: 1.5%;
 
-$body-font: 'Lora', serif;
-$header-font: 'Raleway', sans-serif;
+$body-font: 'Roboto Slab', serif;
+$header-font: 'franchiseregular', sans-serif;
 
 
 @mixin transition($transition-property, $transition-time, $method) {
