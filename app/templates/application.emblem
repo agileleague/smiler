@@ -2,6 +2,21 @@
   .logo
     img.logo-img src="/smiler-logo-white.svg"
 
+  .vote
+    .up.vote-btn
+      | &#9650;
+    .down.vote-btn
+      | &#9660;
+
+  nav.chart-selection
+    ul
+      li.active= link-to "experiment.vote-list" model | Vote List 
+      li= link-to "experiment.heartbeat" model | Heartbeat
+      li= link-to "experiment.user-column" model | User Column
+      li= link-to "experiment.line-overall-score" model | Overall Score (Line)
+      li= link-to "experiment.user-smilies" model | Smilies
+
+
 .content
   if controllers.authentication.isLoggedIn
     nav
