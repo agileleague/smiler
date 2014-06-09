@@ -14,6 +14,8 @@ HeartbeatController = Ember.ObjectController.extend({
 
   thumbDownPath: svgIcons.thumbDownPath
 
+  ecgPath: svgIcons.ecgPath
+
   voteChanged:( ->
     if @get('refreshHandle')
       Ember.run.cancel(@get('refreshHandle'))
@@ -62,10 +64,7 @@ HeartbeatController = Ember.ObjectController.extend({
         "#{translate} #{scale}"
       )
       .attr('d', (d) =>
-        if d.get('score') > 0
-          @get('thumbUpPath')
-        else
-          @get('thumbDownPath')
+        @get('ecgPath')
       )
 
 

@@ -8,24 +8,28 @@ VoteListController = Ember.ObjectController.extend({
   thumbDownPath: svgIcons.thumbDownPath
 
   voteChanged:( ->
-    @get('votes').then( (vs) =>
-      votes = vs
+    @get('votes').then( (votes) =>
       Promise.all(
         votes.mapBy('user')
       )
     ).then( =>
-      @refreshTable()
+      Ember.run.once(@, =>
+        @refreshTable()
+      )
     )
-  ).observes('votes.[]')
+  ).observes('votes.@each')
 
 
   refreshTable: ->
+    console.log("refresh")
     votes = @get('votes').toArray()
     votes.sort( (a,b) ->
       d3.descending(a.get('createdAt'), b.get('createdAt'))
     )
 
-    voteRow = d3.select('table.vote-list tbody').selectAll('tr').data(votes)
+    voteRow = d3.select('table.vote-list tbody').selectAll('tr').data(votes, (d) ->
+      d.get('id')
+    )
 
     # Update
     voteRow.classed('new', false)

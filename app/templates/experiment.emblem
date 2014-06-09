@@ -3,6 +3,13 @@
   h4 Total Score
   h3= totalScore
 
+  if isParticipant
+    view "upvote"
+    |
+    view "downvote"
+  else
+    a.join-link href="#" click=joinExperiment Join Experiment
+
   nav.chart-selection
     ul
       li= link-to "experiment.vote-list" model | Vote List
@@ -20,9 +27,3 @@
       each participants
         li= username
 
-  if isParticipant
-    view "upvote"
-    |
-    view "downvote"
-  else
-    a.join-link href="#" click=joinExperiment Join Experiment
