@@ -34,52 +34,56 @@ HeartbeatController = Ember.ObjectController.extend({
       .domain([timeMin, timeNow])
       .range([0, 600])
 
+    stretchScale = d3.scale.linear()
+      .domain([1,10])
+      .range([0.1, 1])
+
+    votesYMoveScale = d3.scale.linear()
+      .domain([0,10])
+      .range([0 + 60, -357.5 + 60])
+
     filteredVotes = @get('votes').filter( (v) ->
       timeScale(v.get('createdAt')) > 0
     )
 
-    voteGs = d3.select('.heartbeat svg').selectAll('g').data(filteredVotes.toArray(), (d) ->
-      d.get('id')
+    votesPerSecond = d3.nest()
+      .key( (d) ->
+        d.get('createdAt')
+      )
+      .sortKeys(d3.ascending)
+      .rollup( (leaves) ->
+        {
+          votes: leaves.length
+          createdAt: leaves[0].get('createdAt')
+        }
+      )
+      .entries(filteredVotes)
+
+    voteGs = d3.select('.heartbeat svg').selectAll('g').data(votesPerSecond, (d) ->
+      d.values.createdAt
     )
 
     g = voteGs.enter()
       .append('g')
 
     g.attr('class', 'vote-dot')
-      .attr('data-vote-id', (d) ->
-        d.get('id')
-      )
 
     c = g.append('path')
       .classed('vote', true)
-      .classed('upvote', (d) ->
-        d.get('score') > 0
-      )
-      .classed('downvote', (d) ->
-        d.get('score') < 0
-      )
       .attr('transform', (d) ->
-        translate = "translate(#{timeScale(d.get('createdAt'))},0)"
-        scale = "scale(0.1)"
-        "#{translate} #{scale}"
+        translate = "translate(#{timeScale(d.values.createdAt)}, #{votesYMoveScale(d.values.votes)})"
+        scale1 = "scale(0.1, #{stretchScale(d.values.votes)})"
+        "#{translate} #{scale1}"
       )
-      .attr('d', (d) =>
-        @get('ecgPath')
-      )
-
+      .attr('d', @get('ecgPath'))
 
     voteGs.transition().select('path.vote')
       .attr('transform', (d) ->
-        translate = "translate(#{timeScale(d.get('createdAt'))},0)"
-        scale = "scale(0.1)"
-        "#{translate} #{scale}"
+        translate = "translate(#{timeScale(d.values.createdAt)}, #{votesYMoveScale(d.values.votes)})"
+        scale1 = "scale(0.1, #{stretchScale(d.values.votes)})"
+        "#{translate} #{scale1}"
       )
-      .attr('d', (d) =>
-        if d.get('score') > 0
-          @get('thumbUpPath')
-        else
-          @get('thumbDownPath')
-      )
+      .attr('d', @get('ecgPath'))
 
     voteGs.exit()
       .remove()
