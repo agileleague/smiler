@@ -3,7 +3,7 @@
     img.logo-img src="/smiler-logo-white.svg"
 
   unless controllers.authentication.isLoggedIn
-    h2.login-header
+    h3.login-header.text-center
       | Login With
     ul.login-options
       li.github

@@ -119,19 +119,27 @@
   }
 
   .login-header {
-    margin-left: 30px;
+    text-transform:uppercase;
+    background:rgba($blue, .3);
+    margin-bottom:1px;
   }
 
   ul.login-options {
+    background:$blue;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
     li {
+      display: table-cell;      
       text-align: center;
-      padding: 0 10px;
+      padding:0;
       list-style: none;
-      display: inline-block;
-
-      font-size: 4em;
-
+      font-size: 3em;
       transition:all .15s linear;
+      border-right:solid 1px $gray;
+      &:last-of-type {
+        border-right:none;
+      }
       &:hover {
         background:lighten($gray, 6%);
       }
