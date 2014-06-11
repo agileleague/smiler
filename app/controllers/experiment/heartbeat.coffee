@@ -27,10 +27,10 @@ HeartbeatController = Ember.ObjectController.extend({
   refreshChart: ->
     @set('refreshHandle', null)
 
-    timeNow = (new Date().getTime() / 1000)
-    timeMin = timeNow - (180)
+    timeNow = new Date()
+    timeMin = moment(timeNow).subtract('s', 180)
 
-    timeScale = d3.scale.linear()
+    timeScale = d3.time.scale()
       .domain([timeMin, timeNow])
       .range([0, 600])
 
@@ -43,7 +43,7 @@ HeartbeatController = Ember.ObjectController.extend({
       .range([0 + 60, -357.5 + 60])
 
     filteredVotes = @get('votes').filter( (v) ->
-      timeScale(v.get('createdAt')) > 0
+      timeScale(moment.unix(v.get('createdAt'))) > 0
     )
 
     votesPerSecond = d3.nest()
@@ -54,7 +54,7 @@ HeartbeatController = Ember.ObjectController.extend({
       .rollup( (leaves) ->
         {
           votes: leaves.length
-          createdAt: leaves[0].get('createdAt')
+          createdAt: moment.unix(leaves[0].get('createdAt'))
         }
       )
       .entries(filteredVotes)
