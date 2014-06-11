@@ -18,15 +18,16 @@
 
   = outlet 'mainSidebar'
 
+  if controllers.authentication.isModerator
+    .experiment-controls
+      link-to "experiments" | Manage Experiments
+
   if controllers.authentication.isLoggedIn
     a.logout href="#" click="logout"
       | Logout 
       = controllers.authentication.currentUser.username
 
 .content
-  if controllers.authentication.isLoggedIn
-    nav
-      link-to "experiments" | Experiments
 
   = outlet
 
