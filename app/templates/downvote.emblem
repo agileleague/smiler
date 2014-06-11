@@ -1,1 +1,2 @@
-a.vote-link.downvote-link href="#" Down
+a.down.vote-btn href="#"
+  | &#9660;

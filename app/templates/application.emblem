@@ -2,42 +2,26 @@
   .logo
     img.logo-img src="/smiler-logo-white.svg"
 
-  .total-score
-    span.total Total Score:  
-    span.score 14
+  = outlet 'mainSidebar'
 
-  .vote
-    .up.vote-btn
-      | &#9650;
-    .down.vote-btn
-      | &#9660;
-
-  nav.chart-selection
-    ul
-      li.active= link-to "experiment.vote-list" model | Vote List 
-      li= link-to "experiment.heartbeat" model | Heartbeat
-      li= link-to "experiment.user-column" model | User Column
-      li= link-to "experiment.line-overall-score" model | Overall Score (Line)
-      li= link-to "experiment.user-smilies" model | Smilies
-
+  if controllers.authentication.isLoggedIn
+    a.logout href="#" click="logout"
+      | Logout 
+      = controllers.authentication.currentUser.username
+  else
+    ul.login-options
+      li.github
+        a.github-login href="#" click="login 'github'" Login with Github
+      li.facebook
+        a.facebook-login href="#" click="login 'facebook'" Login with Facebook
+      li.google
+        a.twitter-login href="#" click="login 'google'" Login with Google
 
 .content
   if controllers.authentication.isLoggedIn
     nav
       link-to "experiments" | Experiments
-  
+
   = outlet
-  
+
   footer
-    if controllers.authentication.isLoggedIn
-      a.logout href="#" click="logout"
-        | Logout 
-        = controllers.authentication.currentUser.username
-    else
-      ul.login-options
-        li.github
-          a.github-login href="#" click="login 'github'" Login with Github
-        li.facebook
-          a.facebook-login href="#" click="login 'facebook'" Login with Facebook
-        li.google
-          a.twitter-login href="#" click="login 'google'" Login with Google
