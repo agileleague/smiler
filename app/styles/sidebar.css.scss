@@ -113,5 +113,34 @@
     display:inline-block;
     width:100%;
   }
+
+  .login-header {
+    margin-left: 30px;
+  }
+
+  ul.login-options {
+    li {
+      text-align: center;
+      padding: 0 10px;
+      list-style: none;
+      display: inline-block;
+
+      font-size: 4em;
+
+      transition:all .15s linear;
+      &:hover {
+        background:lighten($gray, 6%);
+      }
+
+      a {
+        display: inline;
+      }
+    }
+  }
+
+  a.logout {
+    display: block;
+    margin: 50px 0 0 30px;
+  }
   
 }

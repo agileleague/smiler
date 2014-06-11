@@ -2,20 +2,26 @@
   .logo
     img.logo-img src="/smiler-logo-white.svg"
 
+  unless controllers.authentication.isLoggedIn
+    h2.login-header
+      | Login With
+    ul.login-options
+      li.github
+        a.github-login href="#" click="login 'github'"
+          span.icon-github-01
+      li.facebook
+        a.facebook-login href="#" click="login 'facebook'"
+          span.icon-facebook
+      li.google
+        a.twitter-login href="#" click="login 'google'"
+          span.icon-google
+
   = outlet 'mainSidebar'
 
   if controllers.authentication.isLoggedIn
     a.logout href="#" click="logout"
       | Logout 
       = controllers.authentication.currentUser.username
-  else
-    ul.login-options
-      li.github
-        a.github-login href="#" click="login 'github'" Login with Github
-      li.facebook
-        a.facebook-login href="#" click="login 'facebook'" Login with Facebook
-      li.google
-        a.twitter-login href="#" click="login 'google'" Login with Google
 
 .content
   if controllers.authentication.isLoggedIn
