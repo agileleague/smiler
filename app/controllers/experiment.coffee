@@ -24,8 +24,10 @@ ExperimentController = Ember.ObjectController.extend({
 
   actions: {
     joinExperiment: ->
-      @get('participants').pushObject(@get('currentUser'))
-      @get('model').save()
+      @get('participants').then( =>
+        @get('participants').pushObject(@get('currentUser'))
+        @get('model').save()
+      )
 
     upVote: ->
       @send('vote', 1)
@@ -34,6 +36,9 @@ ExperimentController = Ember.ObjectController.extend({
       @send('vote', -1)
 
     vote: (score) ->
+      unless @get('isParticipant')
+        @send('joinExperiment')
+
       v = @store.createRecord('vote', {
         user: @get('currentUser'),
         experiment: @get('model'),
@@ -43,8 +48,6 @@ ExperimentController = Ember.ObjectController.extend({
 
       @get('votes').pushObject(v)
       @get('model').save()
-
-
   }
 
 })

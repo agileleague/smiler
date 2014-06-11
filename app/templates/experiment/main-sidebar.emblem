@@ -3,12 +3,10 @@
   span.score
     = totalScore
 
-if isParticipant
+if controllers.authentication.isLoggedIn
   .vote
     view "upvote"
     view "downvote"
-else
-  a.join-link href="#" click=joinExperiment Join Experiment
 
 nav.chart-selection
   ul
