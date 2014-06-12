@@ -16,6 +16,7 @@
         a.twitter-login href="#" click="login 'google'"
           span.icon-google
 
+
   = outlet 'mainSidebar'
 
   if controllers.authentication.isModerator
