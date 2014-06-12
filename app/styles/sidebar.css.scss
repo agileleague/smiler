@@ -12,7 +12,7 @@
   
   @media #{$small-min} {
     width:100%;
-    height:100px;
+    height:90px;
     overflow:hidden;
   }
   .logo {
@@ -44,6 +44,32 @@
       //font-size:1.6em;
       font-weight:bold;
     }
+    @media #{$small-min} {
+      @include calc('width', '100% - 50px');
+      text-align:left;
+      padding-left:20px;
+      line-height:35px;
+      display:inline-block;
+      vertical-align:top;
+    }
+  }
+  
+  .mobile-menu {
+    height:35px;
+    padding:8px 10px;
+    width:50px;
+    text-align:center;
+    display:none;
+    background:rgba(0,0,0,0.5);
+    img {
+      width:100%;
+      max-width:25px;
+      height:auto;
+      max-height:25px;
+    }
+    @media #{$small-min} {
+      display:inline-block;
+    }
   }
   
   .vote {
@@ -71,6 +97,9 @@
           background:$dark-red;
         }
       }
+    }
+    @media #{$small-min} {
+      margin-bottom:0;
     }
   }
   

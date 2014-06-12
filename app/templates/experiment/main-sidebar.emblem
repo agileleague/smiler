@@ -3,6 +3,9 @@
   span.score
     = totalScore
 
+.mobile-menu
+  img src="/menu.svg"
+
 if controllers.authentication.isLoggedIn
   .vote
     view "upvote"
