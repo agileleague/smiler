@@ -4,7 +4,8 @@
     = totalScore
 
 .mobile-menu
-  img src="/menu.svg"
+  a.mobile-menu-link click="toggleMobileMenu" href="#"
+    img src="/menu.svg"
 
 if controllers.authentication.isLoggedIn
   .vote
