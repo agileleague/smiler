@@ -1,4 +1,31 @@
 .experiment {
+
+  /* VOTE LIST */
+  .vote-list {
+    tr {
+      text-align:center;
+    }
+    .username {
+      padding:0 10px;
+      img {
+        max-width:80px;
+        height:auto;
+      }
+    }
+    .score {
+      min-width:80px;
+      text-align:center;
+      vertical-align:middle;
+      padding:20px;
+    }
+    .timestamp {
+      padding-top:20px;
+      font-size:.8em;
+      vertical-align:top;
+    }
+  }
+
+
   .heartbeat {
     height: 200px;
 
