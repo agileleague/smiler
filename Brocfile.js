@@ -16,7 +16,7 @@ var app = new EmberApp({
 // Use this to add additional libraries to the generated output files.
 app.import('vendor/ember-data/ember-data.js');
 app.import('vendor/firebase/firebase.js');
-app.import('vendor/firebase-simple-login/firebase-simple-login.js')
+//app.import('vendor/firebase-simple-login/firebase-simple-login.js')
 app.import('vendor/emberfire/dist/emberfire.js')
 app.import('vendor/d3/d3.js')
 app.import('vendor/underscore/underscore.js')
