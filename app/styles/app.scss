@@ -18,7 +18,10 @@ body {
 .content {
   padding:40px 40px 60px 305px;
   position:relative;
-  
+  overflow:auto;
+  @media #{$small-min} {
+    padding:110px 10px 10px;
+  } 
 }
 
 

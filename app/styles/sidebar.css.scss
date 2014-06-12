@@ -9,6 +9,12 @@
   background:$gray;
   color:$lightgray;
   font-size:.8em;
+  
+  @media #{$small-min} {
+    width:100%;
+    height:100px;
+    overflow:hidden;
+  }
   .logo {
     width:100%;
     height:180px;
@@ -17,6 +23,9 @@
     background-position:center center;
     background-size:cover;
     border-bottom:solid 1px $gray;
+    @media #{$small-min} {
+      display:none;
+    }
   }
   
   .total-score {
