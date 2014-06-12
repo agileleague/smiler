@@ -29,6 +29,22 @@
   .heartbeat {
     height: 200px;
 
+    svg {
+      width: 100%;
+    }
+
+    .pulse-line line {
+      stroke-width: 7;
+      stroke: black;
+    }
+
+    .vote-dot {
+      rect.background {
+        stroke: white;
+        fill: white;
+      }
+    }
+
     .upvote {
       stroke: green;
       fill: green;
