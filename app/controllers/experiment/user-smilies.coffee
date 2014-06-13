@@ -60,7 +60,7 @@ UserSmiliesController = Ember.ObjectController.extend({
 
     userScale = d3.scale.ordinal()
       .domain(participantIds)
-      .rangeRoundBands([0, 600], 0.5)
+      .rangeRoundBands([0, 900], 0.5)
 
     mouthControlScale = d3.scale.linear()
       .domain([-10, 10])
@@ -115,6 +115,9 @@ UserSmiliesController = Ember.ObjectController.extend({
       .attr('data-score', (d) ->
         d.score
       )
+      .attr('transform', (d) ->
+        "translate(#{userScale(d.user.get('id'))},80)"
+      )
     face = g.select('circle.face-outer-circle')
       .attr('fill', (d) ->
         faceColorScale(d.score)
@@ -131,7 +134,7 @@ UserSmiliesController = Ember.ObjectController.extend({
     re = g.select('ellipse.right-eye')
     rightEye(re) if re
 
-    # Create
+    # Enter
     g = userGroups.enter()
       .append('g')
 
