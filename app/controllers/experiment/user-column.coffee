@@ -94,7 +94,11 @@ UserColumnController = Ember.ObjectController.extend({
     r = userGroups.select('rect')
     classRect(r)
 
-    r = userGroups.transition().select('rect')
+    g = userGroups.transition()
+    g.attr('transform', (d) ->
+      "translate(#{userScale(d.user.get('id'))},0)"
+    )
+    r = g.select('rect')
     valRect(r)
 
     g = userGroups.enter()
