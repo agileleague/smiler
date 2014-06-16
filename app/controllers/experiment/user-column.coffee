@@ -47,16 +47,34 @@ UserColumnController = Ember.ObjectController.extend({
       s.user.get('id')
     )
 
+    container = $('.user-column svg')
+    chartWidth = container.width()
+    chartHeight = container.height()
+
+    numCols = 5
+    row = (i) ->
+      Math.floor(i / numCols)
+
+    col = (i) ->
+      i % numCols
+
+    numRows = row(scores.length - 1)
+
+    colScale = d3.scale.ordinal()
+      .domain([0...numCols])
+      .rangeRoundBands([0, chartWidth], 0.5)
+
+    rowScale = d3.scale.ordinal()
+      .domain([0..numRows])
+      .rangeRoundBands([0, chartHeight], 0.5)
+
     height = 100
     picHeight = 50
-
-    userScale = d3.scale.ordinal()
-      .domain(participantIds)
-      .rangeRoundBands([0, 600], 0.5)
 
     scoreScale = d3.scale.linear()
       .domain([-10, 0, 10])
       .range([0, height, 0])
+      .clamp(true)
 
     userGroups = d3.select('.user-column svg').selectAll('g').data(scores, (d) ->
       d.user.get('id')
@@ -95,8 +113,8 @@ UserColumnController = Ember.ObjectController.extend({
     classRect(r)
 
     g = userGroups.transition()
-    g.attr('transform', (d) ->
-      "translate(#{userScale(d.user.get('id'))},0)"
+    g.attr('transform', (d, i) ->
+      "translate(#{colScale(col(i))}, #{rowScale(row(i))})"
     )
     r = g.select('rect')
     valRect(r)
@@ -108,8 +126,8 @@ UserColumnController = Ember.ObjectController.extend({
       .attr('data-user-id', (d) ->
         d.user.get('id')
       )
-      .attr('transform', (d) ->
-        "translate(#{userScale(d.user.get('id'))},0)"
+      .attr('transform', (d, i) ->
+        "translate(#{colScale(col(i))}, #{rowScale(row(i))})"
       )
 
     r = g.append('rect')
