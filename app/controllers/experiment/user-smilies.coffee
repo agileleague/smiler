@@ -54,6 +54,25 @@ UserSmiliesController = Ember.ObjectController.extend({
     mouthXOffset = 20
     mouthYOffset = 20
 
+    chart = $('.user-smilies svg')
+    chartWidth = chart.width()
+    chartHeight = chart.height()
+
+    bubbleLayout = d3.layout.pack()
+      .sort(null)
+      .value( (d) ->
+        1
+      )
+      .size([chartWidth, chartHeight])
+      .radius(80)
+      .padding(20)
+
+    nodes = bubbleLayout.nodes({
+      children: scores
+    }).filter( (d) ->
+      d.depth > 0
+    )
+
     happyColor = "green"
     angryColor = "red"
     zeroColor = "white"
@@ -105,10 +124,9 @@ UserSmiliesController = Ember.ObjectController.extend({
           eyeYScale(d.score)
         )
 
-    userGroups = d3.select('.user-smilies svg').selectAll('g.user-smiley-group').data(scores, (d) ->
+    userGroups = d3.select('.user-smilies svg').selectAll('g.user-smiley-group').data(nodes, (d) ->
       d.user.get('id')
     )
-
 
     # Update
     g = userGroups.transition()
@@ -116,7 +134,7 @@ UserSmiliesController = Ember.ObjectController.extend({
         d.score
       )
       .attr('transform', (d) ->
-        "translate(#{userScale(d.user.get('id'))},80)"
+        "translate(#{d.x}, #{d.y})"
       )
     face = g.select('circle.face-outer-circle')
       .attr('fill', (d) ->
@@ -146,7 +164,7 @@ UserSmiliesController = Ember.ObjectController.extend({
         d.score
       )
       .attr('transform', (d) ->
-        "translate(#{userScale(d.user.get('id'))},80)"
+        "translate(#{d.x}, #{d.y})"
       )
 
     g.append('circle')
