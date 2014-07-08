@@ -18,6 +18,11 @@ Smiler is very simple, architecture-wise. To get it running, just:
 1. Copy your Firebase URL namespace into the dev environment in
    config/environment.js
 1. Fire it up!
+1. Set up a login provider ( Facebook/Github/Google )
+1. Log in with said provider
+1. Manually edit your user to be a moderator (change the isModerator flag to true in Firebase). 
+
+Now you'll be able to add experiments.
 
 ## Organization
 
