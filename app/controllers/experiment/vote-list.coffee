@@ -7,22 +7,24 @@ VoteListController = Ember.ObjectController.extend({
 
   thumbDownPath: svgIcons.thumbDownPath
 
+  timeFilteredVotes: Ember.computed.alias("controllers.experiment.timeFilteredVotes")
+
+  init: ->
+    @get('timeFilteredVotes')
+
   voteChanged:( ->
-    @get('votes').then( (votes) =>
-      Promise.all(
-        votes.mapBy('user')
-      )
+    Promise.all(
+      @get('timeFilteredVotes').mapBy('user')
     ).then( =>
       Ember.run.once(@, =>
         @refreshTable()
       )
     )
-  ).observes('votes.@each')
+  ).observes('timeFilteredVotes.[]')
 
 
   refreshTable: ->
-    console.log("refresh")
-    votes = @get('votes').toArray()
+    votes = @get('timeFilteredVotes').toArray()
     votes.sort( (a,b) ->
       d3.descending(a.get('createdAt'), b.get('createdAt'))
     )
@@ -30,6 +32,11 @@ VoteListController = Ember.ObjectController.extend({
     voteRow = d3.select('table.vote-list tbody').selectAll('tr').data(votes, (d) ->
       d.get('id')
     )
+
+    # Exit
+    voteRow.exit().transition()
+      .style('opacity', 0)
+      .remove()
 
     # Update
     voteRow.classed('new', false)
@@ -58,6 +65,7 @@ VoteListController = Ember.ObjectController.extend({
       t = moment.unix(d.get('createdAt'))
       "<time datetime='#{t.toISOString()}'>#{t.fromNow()}</time>"
     )
+
 })
 
 `export default VoteListController;`

@@ -1,9 +1,20 @@
 ExperimentController = Ember.ObjectController.extend({
-  needs: "authentication",
+  needs: "authentication"
 
-  currentUser: Ember.computed.alias("controllers.authentication.currentUser"),
+  currentUser: Ember.computed.alias("controllers.authentication.currentUser")
 
   isModerator: Ember.computed.alias("currentUser.isModerator")
+
+  historyLengthInS: 300
+
+  refreshHandle: null
+
+  init: ->
+    hook = Ember.run.later( =>
+      @send('refilterVotes')
+    , 100)
+
+    @set('refreshHandle', hook)
 
   isParticipant:( ->
     if currentUser = @get('currentUser')
@@ -13,6 +24,10 @@ ExperimentController = Ember.ObjectController.extend({
       false
   ).property('participants.[]', 'currentUser')
 
+  totalVotes:( ->
+    @get('votes').toArray().length
+  ).property('votes.[]')
+
   totalScore:( ->
     @get('votes').toArray().map( (v) ->
       v.get('score')
@@ -21,6 +36,18 @@ ExperimentController = Ember.ObjectController.extend({
     , 0
     )
   ).property('votes.[]')
+
+  timeFilteredVotes:( ->
+    timeMin = if @get('historyLengthInS') > 0
+      moment().subtract('seconds', @get('historyLengthInS'))
+    else
+      # Lifetime
+      moment(0)
+
+    @get('votes').toArray().filter( (vote) ->
+      parseInt(vote.get('createdAt')) > timeMin.unix()
+    )
+  ).property('votes.[]', 'historyLengthInS')
 
   actions: {
     joinExperiment: ->
@@ -48,6 +75,24 @@ ExperimentController = Ember.ObjectController.extend({
 
       @get('votes').pushObject(v)
       @get('model').save()
+
+    setHistoryLength: (length) ->
+      @set('historyLengthInS', length)
+      @send('refilterVotes')
+
+    refilterVotes: ->
+      if @get('refreshHandle')
+        Ember.run.cancel(@get('refreshHandle'))
+
+      @set('refreshHandle', null)
+
+      @notifyPropertyChange('timeFilteredVotes')
+
+      hook = Ember.run.later( =>
+        @send('refilterVotes')
+      , 500)
+
+      @set('refreshHandle', hook)
   }
 
 })
