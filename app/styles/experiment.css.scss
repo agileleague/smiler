@@ -60,6 +60,11 @@
     width: 100%;
     height: 100%;
 
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
     rect.positive-score {
       stroke: green;
       fill: green;
@@ -83,6 +88,11 @@
   .user-smilies {
     width: 100%;
     height: 100%;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
 
     .face-outer-circle {
       stroke: black;
