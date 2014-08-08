@@ -22,13 +22,18 @@ nav.chart-selection
     li= link-to "experiment.vote-list" model | Vote List
     li= link-to "experiment.heartbeat" model | Heartbeat
     li= link-to "experiment.user-column" model | User Column
-    li= link-to "experiment.line-overall-score" model | Overall Score (Line)
+    /li= link-to "experiment.line-overall-score" model | Overall Score (Line) / Not really ready to display...
     li= link-to "experiment.user-smilies" model | Smilies
 
-.time-controls
-  %a href="#" click="setHistoryLength 0"
-    | Lifetime
-  %a href="#" click="setHistoryLength 300"
-    | 5 Minutes
-  %a href="#" click="setHistoryLength 60"
-    | 1 Minute
+div.time-controls
+  %span Time Window
+  %ul
+    %li class=isLifetime:active
+      %a href="#" click="setHistoryLength 0"
+        | Lifetime
+    %li class=isFiveMins:active
+      %a href="#" click="setHistoryLength 300"
+        | 5 Minutes
+    %li class=isOneMin:active
+      %a href="#" click="setHistoryLength 60"
+        | 1 Minute

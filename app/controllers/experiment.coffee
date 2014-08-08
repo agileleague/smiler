@@ -24,6 +24,18 @@ ExperimentController = Ember.ObjectController.extend({
       false
   ).property('participants.[]', 'currentUser')
 
+  isLifetime:( ->
+    @get('historyLengthInS') == 0
+  ).property('historyLengthInS')
+
+  isFiveMins:( ->
+    @get('historyLengthInS') == 300
+  ).property('historyLengthInS')
+
+  isOneMin:( ->
+    @get('historyLengthInS') == 60
+  ).property('historyLengthInS')
+
   totalVotes:( ->
     @get('votes').toArray().length
   ).property('votes.[]')
