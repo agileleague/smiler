@@ -1,7 +1,12 @@
 UserColumnController = Ember.ObjectController.extend({
   needs: "experiment"
 
+  timeFilteredVotes: Ember.computed.alias("controllers.experiment.timeFilteredVotes")
+
   scoresByParticipant: [],
+
+  init: ->
+    @get('timeFilteredVotes')
 
   actions: {
     buildChart: ->
@@ -13,12 +18,9 @@ UserColumnController = Ember.ObjectController.extend({
   }
 
   calculateScoresByParticipant:( ->
-    votes = null
-    @get('votes').then( (vs) =>
-      votes = vs
-      Promise.all(
-        votes.mapBy('user')
-      )
+    votes = @get('timeFilteredVotes')
+    Promise.all(
+      votes.mapBy('user')
     ).then( =>
       @get('participants')
     ).then( (users) =>
@@ -34,7 +36,7 @@ UserColumnController = Ember.ObjectController.extend({
       )
       @set('scoresByParticipant', scores)
     )
-  ).observes('votes.[], participants.[]')
+  ).observes('timeFilteredVotes.[], participants.[]')
 
 
   scoreChanged:( ->
