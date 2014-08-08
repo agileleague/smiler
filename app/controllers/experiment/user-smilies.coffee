@@ -3,6 +3,11 @@ UserSmiliesController = Ember.ObjectController.extend({
 
   scoresByParticipant: [],
 
+  timeFilteredVotes: Ember.computed.alias("controllers.experiment.timeFilteredVotes")
+
+  init: ->
+    @get('timeFilteredVotes')
+
   actions: {
     buildChart: ->
       @get('votes').then( =>
@@ -13,12 +18,9 @@ UserSmiliesController = Ember.ObjectController.extend({
   }
 
   calculateScoresByParticipant:( ->
-    votes = null
-    @get('votes').then( (vs) =>
-      votes = vs
-      Promise.all(
-        votes.mapBy('user')
-      )
+    votes = @get('timeFilteredVotes')
+    Promise.all(
+      votes.mapBy('user')
     ).then( =>
       @get('participants')
     ).then( (users) =>
@@ -34,7 +36,7 @@ UserSmiliesController = Ember.ObjectController.extend({
       )
       @set('scoresByParticipant', scores)
     )
-  ).observes('votes.[], participants.[]')
+  ).observes('timeFilteredVotes.[], participants.[]')
 
 
   scoreChanged:( ->
